@@ -1,0 +1,21 @@
+{
+  "name": "vue-tabber-demo",
+  "version": "1.0.0",
+  "description": "vue-tabber demo",
+  "main": "src/js/index.js",
+  "scripts": {},
+  "author": "MJ PC Lab",
+  "license": "ISC",
+  "dependencies": {
+    "vue": "^2.4.2",
+    "vue-tabber": "0.0.6"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-loader": "^7.1.2",
+    "babel-preset-env": "^1.6.0",
+    "css-loader": "^0.28.7",
+    "style-loader": "^0.18.2",
+    "webpack": "^3.5.6"
+  }
+}
