@@ -7761,7 +7761,7 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-tabberComponents.register(_vue2.default);
+tabberComponents.registerTo(_vue2.default);
 
 new _vue2.default({
 	el: '#app'
@@ -17883,8 +17883,7 @@ function getDefinitions() {
 	};
 }
 
-function register(externalVue) {
-	const difinitions = getDefinitions();
+function registerTo(externalVue) {
 	externalVue.component('VueTabberLabel', labelDefinition);
 	externalVue.component('VueTabberPage', pageDefinition);
 	externalVue.component('VueTabber', tabberDefinition);
@@ -17892,7 +17891,7 @@ function register(externalVue) {
 
 module.exports = {
 	getDefinitions,
-	register
+	registerTo
 };
 
 
