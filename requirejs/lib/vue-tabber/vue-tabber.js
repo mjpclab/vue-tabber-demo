@@ -81,50 +81,53 @@ module.exports = __WEBPACK_EXTERNAL_MODULE_0__;
 
 /***/ }),
 /* 1 */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__src_js_tabber_index__ = __webpack_require__(2);
+/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return __WEBPACK_IMPORTED_MODULE_0__src_js_tabber_index__["a"]; });
 
-
-module.exports = __webpack_require__(2);
 
 /***/ }),
 /* 2 */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__definition__ = __webpack_require__(3);
 
 
-var Vue = __webpack_require__(0);
-if (Vue.default) {
-	Vue = Vue.default;
-}
 
-var definition = __webpack_require__(3);
-var VueTabber = Vue.component('VueTabber', definition);
 
-module.exports = VueTabber;
+var VueTabber = __WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('VueTabber', __WEBPACK_IMPORTED_MODULE_1__definition__["a" /* default */]);
+
+/* harmony default export */ __webpack_exports__["a"] = (VueTabber);
 
 /***/ }),
 /* 3 */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-
-
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__label__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__page__ = __webpack_require__(6);
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
-var Label = __webpack_require__(4);
-var Page = __webpack_require__(6);
+
+
 
 var RE_WHITESPACES = /\s+/;
 
+var POSITION_TOP = 'top';
+var POSITION_BOTTOM = 'bottom';
+
 function isLabel(vnode) {
-	return vnode.componentOptions.Ctor === Label;
+	return vnode.componentOptions.Ctor === __WEBPACK_IMPORTED_MODULE_0__label__["a" /* default */];
 }
 
 function isPage(vnode) {
-	return vnode.componentOptions.Ctor === Page;
+	return vnode.componentOptions.Ctor === __WEBPACK_IMPORTED_MODULE_1__page__["a" /* default */];
 }
 
 function getLabelAndPageVnodes(vnodes) {
@@ -134,6 +137,15 @@ function getLabelAndPageVnodes(vnodes) {
 		}
 		return isLabel(vnode) || isPage(vnode);
 	});
+}
+
+function getValidIndex(index) {
+	if (index === '' || !isFinite(index) || isNaN(index)) {
+		return -1;
+	}
+
+	var intIndex = parseInt(index);
+	return intIndex < 0 ? 0 : index;
 }
 
 function getValidEvents(eventList) {
@@ -162,8 +174,8 @@ function mergeEventHandlers() {
 		eventHandlers[_key] = arguments[_key];
 	}
 
-	eventHandlers.forEach(function (eventHandler) {
-		Object.keys(eventHandler).forEach(function (event) {
+	eventHandlers && eventHandlers.forEach(function (eventHandler) {
+		eventHandler && Object.keys(eventHandler).forEach(function (event) {
 			var handler = eventHandler[event];
 			mergedEventHandler[event] = handler;
 		});
@@ -172,6 +184,7 @@ function mergeEventHandlers() {
 }
 
 var definition = {
+	name: 'VueTabber',
 	props: {
 		triggerEvents: { type: [Array, String], default: 'click' },
 		delayTriggerEvents: { type: [Array, String] },
@@ -182,10 +195,10 @@ var definition = {
 		tabContainerClass: { type: String, default: 'tab-container' },
 
 		labelContainerClass: { type: String, default: 'label-container' },
-		showTopLabelContainer: { type: Boolean, default: true },
-		showBottomLabelContainer: { type: Boolean, default: false },
-		topLabelContainerClass: { type: String, default: 'top' },
-		bottomLabelContainerClass: { type: String, default: 'bottom' },
+		showHeaderLabelContainer: { type: Boolean, default: true },
+		showFooterLabelContainer: { type: Boolean, default: false },
+		headerLabelContainerClass: { type: String, default: 'header-container' },
+		footerLabelContainerClass: { type: String, default: 'footer-container' },
 		labelItemClass: { type: String, default: 'label-item' },
 		labelItemActiveClass: { type: String, default: 'label-active' },
 		labelItemInactiveClass: { type: String, default: 'label-inactive' },
@@ -197,11 +210,12 @@ var definition = {
 	},
 	data: function data() {
 		return {
-			currentIndex: -1,
 			count: 0,
-			validTriggerEvents: [],
-			validDelayTriggerEvents: [],
-			validDelayTriggerCancelEvents: [],
+			targetIndex: getValidIndex(this.activeIndex),
+			currentIndex: -1,
+			validTriggerEvents: getValidEvents(this.triggerEvents),
+			validDelayTriggerEvents: getValidEvents(this.delayTriggerEvents),
+			validDelayTriggerCancelEvents: getValidEvents(this.delayTriggerCancelEvents),
 			delayTimeout: undefined
 		};
 	},
@@ -213,37 +227,7 @@ var definition = {
 	},
 	methods: {
 		switchTo: function switchTo(index) {
-			if (!isFinite(index) || isNaN(index)) {
-				return;
-			}
-
-			var oldIndex = this.currentIndex;
-			var newIndex = void 0;
-			if (index < 0) {
-				newIndex = 0;
-			} else if (index >= this.count) {
-				newIndex = this.count - 1;
-			} else {
-				newIndex = parseInt(index);
-			}
-
-			if (oldIndex === newIndex) {
-				return;
-			}
-
-			this.currentIndex = newIndex;
-			this.$emit('switch', oldIndex, newIndex);
-			this.$emit('update:activeIndex', newIndex);
-		}
-	},
-	created: function created() {
-		this.validTriggerEvents = getValidEvents(this.triggerEvents);
-		this.validDelayTriggerEvents = getValidEvents(this.delayTriggerEvents);
-		this.validDelayTriggerCancelEvents = getValidEvents(this.delayTriggerCancelEvents);
-	},
-	mounted: function mounted() {
-		if (this.count) {
-			this.switchTo(this.activeIndex);
+			this.targetIndex = getValidIndex(index);
 		}
 	},
 	beforeUnmount: function beforeUnmount() {
@@ -253,10 +237,11 @@ var definition = {
 		var _this = this;
 
 		//utility
-		var _createLabelItem = function _createLabelItem(childVNodes, index) {
+		var _createLabelItem = function _createLabelItem(childVNodes, key, index) {
 			var _class;
 
 			var doSwitch = function doSwitch() {
+				clearTimeout(_this.delayTimeout);
 				_this.switchTo(index);
 			};
 			var localDelayTimeout = void 0;
@@ -270,38 +255,48 @@ var definition = {
 				}
 			};
 
-			var isActive = index === _this.currentIndex;
+			var triggerEventHandlers = getEventHandlers(_this.validTriggerEvents, doSwitch);
+			var delayTriggerEventHandlers = void 0;
+			var delayTriggerCancelEventHandlers = void 0;
+			if (_this.validDelayTriggerEvents && _this.validDelayTriggerEvents.length) {
+				delayTriggerEventHandlers = getEventHandlers(_this.validDelayTriggerEvents, delayDoSwitch);
+				delayTriggerCancelEventHandlers = getEventHandlers(_this.validDelayTriggerCancelEvents, cancelDelayDoSwitch);
+			}
+
 			return createElement('div', {
-				'class': (_class = {}, _defineProperty(_class, _this.labelItemClass, true), _defineProperty(_class, _this.labelItemActiveClass, isActive), _defineProperty(_class, _this.labelItemInactiveClass, !isActive), _class),
-				on: mergeEventHandlers(getEventHandlers(_this.validTriggerEvents, doSwitch), getEventHandlers(_this.validDelayTriggerEvents, delayDoSwitch), getEventHandlers(_this.validDelayTriggerCancelEvents, cancelDelayDoSwitch))
+				'class': (_class = {}, _defineProperty(_class, _this.labelItemClass, true), _defineProperty(_class, _this.labelItemActiveClass, false), _defineProperty(_class, _this.labelItemInactiveClass, true), _class),
+				on: mergeEventHandlers(delayTriggerCancelEventHandlers, delayTriggerEventHandlers, triggerEventHandlers),
+				key: key
 			}, childVNodes);
 		};
 
-		var _createPageItem = function _createPageItem(childVNodes, index) {
+		var _createPageItem = function _createPageItem(childVNodes, key) {
 			var _class2;
 
-			var isActive = index === _this.currentIndex;
 			return createElement('div', {
-				'class': (_class2 = {}, _defineProperty(_class2, _this.pageItemClass, true), _defineProperty(_class2, _this.pageItemActiveClass, isActive), _defineProperty(_class2, _this.pageItemInactiveClass, !isActive), _class2)
+				'class': (_class2 = {}, _defineProperty(_class2, _this.pageItemClass, true), _defineProperty(_class2, _this.pageItemActiveClass, false), _defineProperty(_class2, _this.pageItemInactiveClass, true), _class2),
+				key: key
 			}, childVNodes);
 		};
 
 		var createLabelAndPageItems = function createLabelAndPageItems(vnodes) {
 			var labelItems = [];
 			var pageItems = [];
+			var key = undefined;
 
 			var currentLabel = [];
 			var currentPage = [];
 
-			vnodes.forEach(function (vnode) {
+			vnodes.forEach(function (vnode, index) {
 				if (isLabel(vnode)) {
 					if (currentLabel.length) {
-						labelItems.push(_createLabelItem(currentLabel, labelItems.length));
-						pageItems.push(_createPageItem(currentPage, pageItems.length));
+						labelItems.push(_createLabelItem(currentLabel, key, labelItems.length));
+						pageItems.push(_createPageItem(currentPage, key));
 					}
 					currentLabel = [];
 					currentLabel.push.apply(currentLabel, vnode.componentOptions.children);
 					currentPage = [];
+					key = vnode.data.key ? 'key-' + vnode.data.key : 'index-' + index;
 				} else /*if(isPage(item))*/{
 						if (!currentLabel.length) {
 							currentLabel.push('');
@@ -311,8 +306,8 @@ var definition = {
 			});
 
 			if (currentLabel.length) {
-				labelItems.push(_createLabelItem(currentLabel, labelItems.length));
-				pageItems.push(_createPageItem(currentPage, pageItems.length));
+				labelItems.push(_createLabelItem(currentLabel, key, labelItems.length));
+				pageItems.push(_createPageItem(currentPage, key));
 			}
 
 			return {
@@ -323,30 +318,33 @@ var definition = {
 
 		var createTabContainer = function createTabContainer(items) {
 			return createElement('div', {
-				'class': _defineProperty({}, _this.tabContainerClass, true)
+				'class': _defineProperty({}, _this.tabContainerClass, true),
+				key: 'tab-container'
 			}, items);
 		};
 
-		var _createLabelContainer = function _createLabelContainer(labelItems, positionClass) {
+		var _createLabelContainer = function _createLabelContainer(labelItems, positionClass, position) {
 			var _class4;
 
 			window.labelContainer = createElement('div', {
-				'class': (_class4 = {}, _defineProperty(_class4, _this.labelContainerClass, true), _defineProperty(_class4, positionClass, true), _class4)
+				'class': (_class4 = {}, _defineProperty(_class4, _this.labelContainerClass, true), _defineProperty(_class4, positionClass, true), _class4),
+				key: 'label-container-' + position
 			}, labelItems);
 			return window.labelContainer;
 		};
 
-		var createTopLabelContainer = function createTopLabelContainer(labelItems) {
-			return _createLabelContainer(labelItems, _this.topLabelContainerClass);
+		var createHeaderLabelContainer = function createHeaderLabelContainer(labelItems) {
+			return _createLabelContainer(labelItems, _this.headerLabelContainerClass, POSITION_TOP);
 		};
 
-		var createBottomLabelContainer = function createBottomLabelContainer(labelItems) {
-			return _createLabelContainer(labelItems, _this.bottomLabelContainerClass);
+		var createFooterLabelContainer = function createFooterLabelContainer(labelItems) {
+			return _createLabelContainer(labelItems, _this.footerLabelContainerClass, POSITION_BOTTOM);
 		};
 
 		var createPageContainer = function createPageContainer(pageItems) {
 			return createElement('div', {
-				'class': _defineProperty({}, _this.pageContainerClass, true)
+				'class': _defineProperty({}, _this.pageContainerClass, true),
+				key: 'page-container'
 			}, pageItems);
 		};
 
@@ -369,7 +367,7 @@ var definition = {
 		//====================================================================================
 		//start
 		var slotChildren = this.$slots.default;
-		if (!slotChildren.length) {
+		if (!slotChildren || !slotChildren.length) {
 			return;
 		}
 
@@ -385,90 +383,97 @@ var definition = {
 		    pageItems = _createLabelAndPageIt.pageItems;
 
 		this.count = labelItems.length;
+		var oldIndex = this.currentIndex;
+		var newIndex = this.targetIndex >= this.count ? this.count - 1 : this.targetIndex;
+		this.currentIndex = newIndex;
+		if (oldIndex !== newIndex) {
+			this.$emit('switch', oldIndex, newIndex);
+			this.$emit('update:activeIndex', newIndex);
+		}
 
-		var topLabelItems = void 0;
-		var bottomLabelItems = void 0;
-		if (this.showTopLabelContainer && this.showBottomLabelContainer) {
-			topLabelItems = labelItems;
-			bottomLabelItems = cloneVNodes(labelItems);
+		labelItems[newIndex].data['class'][this.labelItemActiveClass] = true;
+		labelItems[newIndex].data['class'][this.labelItemInactiveClass] = false;
+
+		pageItems[newIndex].data['class'][this.pageItemActiveClass] = true;
+		pageItems[newIndex].data['class'][this.pageItemInactiveClass] = false;
+
+		var headerLabelItems = void 0;
+		var footerLabelItems = void 0;
+		if (this.showHeaderLabelContainer && this.showFooterLabelContainer) {
+			headerLabelItems = labelItems;
+			footerLabelItems = cloneVNodes(labelItems);
 		} else {
-			topLabelItems = bottomLabelItems = labelItems;
+			headerLabelItems = footerLabelItems = labelItems;
 		}
 
 		// top label container
-		var topLabelContainer = this.showTopLabelContainer && createTopLabelContainer(topLabelItems);
+		var headerLabelContainer = this.showHeaderLabelContainer && createHeaderLabelContainer(headerLabelItems);
 
 		//page container
 		var pageContainer = createPageContainer(pageItems);
 
 		// bottom label container
-		var bottomLabelContainer = this.showBottomLabelContainer && createBottomLabelContainer(bottomLabelItems);
+		var footerLabelContainer = this.showFooterLabelContainer && createFooterLabelContainer(footerLabelItems);
 
 		//tabb container
-		var tabContaienr = createTabContainer([topLabelContainer, pageContainer, bottomLabelContainer]);
+		var tabContaienr = createTabContainer([headerLabelContainer, pageContainer, footerLabelContainer]);
 
 		//return
 		return tabContaienr;
 	}
 };
 
-module.exports = definition;
+/* harmony default export */ __webpack_exports__["a"] = (definition);
 
 /***/ }),
 /* 4 */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__definition__ = __webpack_require__(5);
 
 
-var Vue = __webpack_require__(0);
-if (Vue.default) {
-	Vue = Vue.default;
-}
 
-var definition = __webpack_require__(5);
-var VueTabberLabel = Vue.component('VueTabberLabel', definition);
 
-module.exports = VueTabberLabel;
+var VueTabberLabel = __WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('VueTabberLabel', __WEBPACK_IMPORTED_MODULE_1__definition__["a" /* default */]);
+
+/* harmony default export */ __webpack_exports__["a"] = (VueTabberLabel);
 
 /***/ }),
 /* 5 */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-
-
-var definition = {};
-
-module.exports = definition;
+/* harmony default export */ __webpack_exports__["a"] = ({
+	name: 'VueTabberLabel'
+});
 
 /***/ }),
 /* 6 */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__definition__ = __webpack_require__(7);
 
 
-var Vue = __webpack_require__(0);
-if (Vue.default) {
-	Vue = Vue.default;
-}
 
-var definition = __webpack_require__(7);
-var VueTabberPage = Vue.component('VueTabberPage', definition);
 
-module.exports = VueTabberPage;
+var VueTabberPage = __WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('VueTabberPage', __WEBPACK_IMPORTED_MODULE_1__definition__["a" /* default */]);
+
+/* harmony default export */ __webpack_exports__["a"] = (VueTabberPage);
 
 /***/ }),
 /* 7 */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-
-
-var definition = {};
-
-module.exports = definition;
+/* harmony default export */ __webpack_exports__["a"] = ({
+	name: 'VueTabberPage'
+});
 
 /***/ })
 /******/ ]);
