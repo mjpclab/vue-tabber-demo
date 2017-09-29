@@ -80,7 +80,7 @@ return /******/ (function(modules) { // webpackBootstrap
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* WEBPACK VAR INJECTION */(function(process, global) {/*!
- * Vue.js v2.4.3
+ * Vue.js v2.4.4
  * (c) 2014-2017 Evan You
  * Released under the MIT License.
  */
@@ -4799,7 +4799,7 @@ Object.defineProperty(Vue$3.prototype, '$ssrContext', {
   }
 });
 
-Vue$3.version = '2.4.3';
+Vue$3.version = '2.4.4';
 
 /*  */
 
@@ -7885,36 +7885,131 @@ module.exports = __webpack_require__(5);
 /* 5 */
 /***/ (function(module, exports, __webpack_require__) {
 
-let Vue = __webpack_require__(0);
-if (Vue.default) {
-	Vue = Vue.default;
-}
+(function webpackUniversalModuleDefinition(root, factory) {
+	if(true)
+		module.exports = factory(__webpack_require__(0));
+	else if(typeof define === 'function' && define.amd)
+		define(["vue"], factory);
+	else if(typeof exports === 'object')
+		exports["vue-tabber"] = factory(require("vue"));
+	else
+		root["VueTabber"] = factory(root["Vue"]);
+})(this, function(__WEBPACK_EXTERNAL_MODULE_0__) {
+return /******/ (function(modules) { // webpackBootstrap
+/******/ 	// The module cache
+/******/ 	var installedModules = {};
+/******/
+/******/ 	// The require function
+/******/ 	function __webpack_require__(moduleId) {
+/******/
+/******/ 		// Check if module is in cache
+/******/ 		if(installedModules[moduleId]) {
+/******/ 			return installedModules[moduleId].exports;
+/******/ 		}
+/******/ 		// Create a new module (and put it into the cache)
+/******/ 		var module = installedModules[moduleId] = {
+/******/ 			i: moduleId,
+/******/ 			l: false,
+/******/ 			exports: {}
+/******/ 		};
+/******/
+/******/ 		// Execute the module function
+/******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
+/******/
+/******/ 		// Flag the module as loaded
+/******/ 		module.l = true;
+/******/
+/******/ 		// Return the exports of the module
+/******/ 		return module.exports;
+/******/ 	}
+/******/
+/******/
+/******/ 	// expose the modules object (__webpack_modules__)
+/******/ 	__webpack_require__.m = modules;
+/******/
+/******/ 	// expose the module cache
+/******/ 	__webpack_require__.c = installedModules;
+/******/
+/******/ 	// define getter function for harmony exports
+/******/ 	__webpack_require__.d = function(exports, name, getter) {
+/******/ 		if(!__webpack_require__.o(exports, name)) {
+/******/ 			Object.defineProperty(exports, name, {
+/******/ 				configurable: false,
+/******/ 				enumerable: true,
+/******/ 				get: getter
+/******/ 			});
+/******/ 		}
+/******/ 	};
+/******/
+/******/ 	// getDefaultExport function for compatibility with non-harmony modules
+/******/ 	__webpack_require__.n = function(module) {
+/******/ 		var getter = module && module.__esModule ?
+/******/ 			function getDefault() { return module['default']; } :
+/******/ 			function getModuleExports() { return module; };
+/******/ 		__webpack_require__.d(getter, 'a', getter);
+/******/ 		return getter;
+/******/ 	};
+/******/
+/******/ 	// Object.prototype.hasOwnProperty.call
+/******/ 	__webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
+/******/
+/******/ 	// __webpack_public_path__
+/******/ 	__webpack_require__.p = "";
+/******/
+/******/ 	// Load entry module and return exports
+/******/ 	return __webpack_require__(__webpack_require__.s = 1);
+/******/ })
+/************************************************************************/
+/******/ ([
+/* 0 */
+/***/ (function(module, exports) {
 
-const definition = __webpack_require__(6);
-const VueTabber = Vue.component('VueTabber', definition);
-
-module.exports = VueTabber;
-
+module.exports = __WEBPACK_EXTERNAL_MODULE_0__;
 
 /***/ }),
-/* 6 */
-/***/ (function(module, exports, __webpack_require__) {
+/* 1 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-const Label = __webpack_require__(7);
-const Page = __webpack_require__(9);
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__definition__ = __webpack_require__(2);
 
-const RE_WHITESPACES = /\s+/;
+
+
+
+var VueTabber = __WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('VueTabber', __WEBPACK_IMPORTED_MODULE_1__definition__["a" /* default */]);
+
+/* harmony default export */ __webpack_exports__["default"] = (VueTabber);
+
+/***/ }),
+/* 2 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__label__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__page__ = __webpack_require__(5);
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+
+
+
+var RE_WHITESPACES = /\s+/;
+
+var POSITION_TOP = 'top';
+var POSITION_BOTTOM = 'bottom';
 
 function isLabel(vnode) {
-	return vnode.componentOptions.Ctor === Label;
+	return vnode.componentOptions.Ctor === __WEBPACK_IMPORTED_MODULE_0__label__["a" /* default */];
 }
 
 function isPage(vnode) {
-	return vnode.componentOptions.Ctor === Page;
+	return vnode.componentOptions.Ctor === __WEBPACK_IMPORTED_MODULE_1__page__["a" /* default */];
 }
 
 function getLabelAndPageVnodes(vnodes) {
-	return vnodes.filter(vnode => {
+	return vnodes.filter(function (vnode) {
 		if (!vnode.componentOptions) {
 			return false;
 		}
@@ -7922,11 +8017,20 @@ function getLabelAndPageVnodes(vnodes) {
 	});
 }
 
+function getValidIndex(index) {
+	if (index === '' || !isFinite(index) || isNaN(index)) {
+		return -1;
+	}
+
+	var intIndex = parseInt(index);
+	return intIndex < 0 ? 0 : index;
+}
+
 function getValidEvents(eventList) {
 	if (eventList) {
-		const validEvents = [];
-		const events = Array.isArray(eventList) ? eventList : String(eventList).split(RE_WHITESPACES);
-		events.length && events.forEach(eventName => {
+		var validEvents = [];
+		var events = Array.isArray(eventList) ? eventList : String(eventList).split(RE_WHITESPACES);
+		events.length && events.forEach(function (eventName) {
 			eventName && validEvents.push(eventName);
 		});
 		return validEvents;
@@ -7934,331 +8038,325 @@ function getValidEvents(eventList) {
 }
 
 function getEventHandlers(events, handler) {
-	const on = {};
-	events && events.forEach(eventName => {
+	var on = {};
+	events && events.forEach(function (eventName) {
 		on[eventName] = handler;
 	});
 	return on;
 }
 
-function mergeEventHandlers(...eventHandlers) {
-	const mergedEventHandler = {};
-	eventHandlers.forEach(eventHandler => {
-		Object.keys(eventHandler).forEach(event => {
-			const handler = eventHandler[event];
+function mergeEventHandlers() {
+	var mergedEventHandler = {};
+
+	for (var _len = arguments.length, eventHandlers = Array(_len), _key = 0; _key < _len; _key++) {
+		eventHandlers[_key] = arguments[_key];
+	}
+
+	eventHandlers && eventHandlers.forEach(function (eventHandler) {
+		eventHandler && Object.keys(eventHandler).forEach(function (event) {
+			var handler = eventHandler[event];
 			mergedEventHandler[event] = handler;
-		})
+		});
 	});
 	return mergedEventHandler;
 }
 
-const definition = {
+var definition = {
 	name: 'VueTabber',
 	props: {
-		triggerEvents: {type: [Array, String], default: 'click'},
-		delayTriggerEvents: {type: [Array, String]},
-		delayTriggerCancelEvents: {type: [Array, String]},
-		delayTriggerLatency: {type: [Number, String], default: 200},
-		activeIndex: {type: [Number, String], default: 0},
+		triggerEvents: { type: [Array, String], default: 'click' },
+		delayTriggerEvents: { type: [Array, String] },
+		delayTriggerCancelEvents: { type: [Array, String] },
+		delayTriggerLatency: { type: [Number, String], default: 200 },
+		activeIndex: { type: [Number, String], default: 0 },
 
-		tabContainerClass: {type: String, default: 'tab-container'},
+		tabContainerClass: { type: String, default: 'tab-container' },
 
-		labelContainerClass: {type: String, default: 'label-container'},
-		showTopLabelContainer: {type: Boolean, default: true},
-		showBottomLabelContainer: {type: Boolean, default: false},
-		topLabelContainerClass: {type: String, default: 'top'},
-		bottomLabelContainerClass: {type: String, default: 'bottom'},
-		labelItemClass: {type: String, default: 'label-item'},
-		labelItemActiveClass: {type: String, default: 'label-active'},
-		labelItemInactiveClass: {type: String, default: 'label-inactive'},
+		labelContainerClass: { type: String, default: 'label-container' },
+		showHeaderLabelContainer: { type: Boolean, default: true },
+		showFooterLabelContainer: { type: Boolean, default: false },
+		headerLabelContainerClass: { type: String, default: 'header-container' },
+		footerLabelContainerClass: { type: String, default: 'footer-container' },
+		labelItemClass: { type: String, default: 'label-item' },
+		labelItemActiveClass: { type: String, default: 'label-active' },
+		labelItemInactiveClass: { type: String, default: 'label-inactive' },
 
-		pageContainerClass: {type: String, default: 'page-container'},
-		pageItemClass: {type: String, default: 'page-item'},
-		pageItemActiveClass: {type: String, default: 'page-active'},
-		pageItemInactiveClass: {type: String, default: 'page-inactive'},
+		pageContainerClass: { type: String, default: 'page-container' },
+		pageItemClass: { type: String, default: 'page-item' },
+		pageItemActiveClass: { type: String, default: 'page-active' },
+		pageItemInactiveClass: { type: String, default: 'page-inactive' }
 	},
-	data() {
+	data: function data() {
 		return {
-			currentIndex: -1,
 			count: 0,
-			validTriggerEvents: [],
-			validDelayTriggerEvents: [],
-			validDelayTriggerCancelEvents: [],
+			targetIndex: getValidIndex(this.activeIndex),
+			currentIndex: -1,
+			validTriggerEvents: getValidEvents(this.triggerEvents),
+			validDelayTriggerEvents: getValidEvents(this.delayTriggerEvents),
+			validDelayTriggerCancelEvents: getValidEvents(this.delayTriggerCancelEvents),
 			delayTimeout: undefined
 		};
 	},
+
 	watch: {
-		activeIndex(newValue) {
+		activeIndex: function activeIndex(newValue) {
 			this.switchTo(newValue);
 		}
 	},
 	methods: {
-		switchTo(index) {
-			if (!isFinite(index) || isNaN(index)) {
-				return;
-			}
-
-			const oldIndex = this.currentIndex;
-			let newIndex;
-			if (index < 0) {
-				newIndex = 0;
-			}
-			else if (index >= this.count) {
-				newIndex = this.count - 1;
-			}
-			else {
-				newIndex = parseInt(index);
-			}
-
-			if (oldIndex === newIndex) {
-				return;
-			}
-
-			this.currentIndex = newIndex;
-			this.$emit('switch', oldIndex, newIndex);
-			this.$emit('update:activeIndex', newIndex);
+		switchTo: function switchTo(index) {
+			this.targetIndex = getValidIndex(index);
 		}
 	},
-	created() {
-		this.validTriggerEvents = getValidEvents(this.triggerEvents);
-		this.validDelayTriggerEvents = getValidEvents(this.delayTriggerEvents);
-		this.validDelayTriggerCancelEvents = getValidEvents(this.delayTriggerCancelEvents);
-	},
-	mounted() {
-		if (this.count) {
-			this.switchTo(this.activeIndex);
-		}
-	},
-	beforeUnmount() {
+	beforeUnmount: function beforeUnmount() {
 		clearTimeout(this.delayTimeout);
 	},
-	render(createElement) {
+	render: function render(createElement) {
+		var _this = this;
+
 		//utility
-		const _createLabelItem = (childVNodes, index) => {
-			const doSwitch = () => {
-				this.switchTo(index);
+		var _createLabelItem = function _createLabelItem(childVNodes, key, index) {
+			var _class;
+
+			var doSwitch = function doSwitch() {
+				clearTimeout(_this.delayTimeout);
+				_this.switchTo(index);
 			};
-			let localDelayTimeout;
-			const delayDoSwitch = this.delayTriggerLatency <= 0 ?
-				doSwitch :
-				() => {
-					clearTimeout(this.delayTimeout);
-					localDelayTimeout = this.delayTimeout = setTimeout(doSwitch, this.delayTriggerLatency);
-				};
-			const cancelDelayDoSwitch = () => {
-				if (localDelayTimeout === this.delayTimeout) {
+			var localDelayTimeout = void 0;
+			var delayDoSwitch = _this.delayTriggerLatency <= 0 ? doSwitch : function () {
+				clearTimeout(_this.delayTimeout);
+				localDelayTimeout = _this.delayTimeout = setTimeout(doSwitch, _this.delayTriggerLatency);
+			};
+			var cancelDelayDoSwitch = function cancelDelayDoSwitch() {
+				if (localDelayTimeout === _this.delayTimeout) {
 					clearTimeout(localDelayTimeout);
 				}
 			};
 
-			const isActive = index === this.currentIndex;
+			var triggerEventHandlers = getEventHandlers(_this.validTriggerEvents, doSwitch);
+			var delayTriggerEventHandlers = void 0;
+			var delayTriggerCancelEventHandlers = void 0;
+			if (_this.validDelayTriggerEvents && _this.validDelayTriggerEvents.length) {
+				delayTriggerEventHandlers = getEventHandlers(_this.validDelayTriggerEvents, delayDoSwitch);
+				delayTriggerCancelEventHandlers = getEventHandlers(_this.validDelayTriggerCancelEvents, cancelDelayDoSwitch);
+			}
+
 			return createElement('div', {
-				'class': {
-					[this.labelItemClass]: true,
-					[this.labelItemActiveClass]: isActive,
-					[this.labelItemInactiveClass]: !isActive
-				},
-				on: mergeEventHandlers(
-					getEventHandlers(this.validTriggerEvents, doSwitch),
-					getEventHandlers(this.validDelayTriggerEvents, delayDoSwitch),
-					getEventHandlers(this.validDelayTriggerCancelEvents, cancelDelayDoSwitch)
-				)
+				'class': (_class = {}, _defineProperty(_class, _this.labelItemClass, true), _defineProperty(_class, _this.labelItemActiveClass, false), _defineProperty(_class, _this.labelItemInactiveClass, true), _class),
+				on: mergeEventHandlers(delayTriggerCancelEventHandlers, delayTriggerEventHandlers, triggerEventHandlers),
+				key: key
 			}, childVNodes);
 		};
 
-		const _createPageItem = (childVNodes, index) => {
-			const isActive = index === this.currentIndex;
+		var _createPageItem = function _createPageItem(childVNodes, key) {
+			var _class2;
+
 			return createElement('div', {
-				'class': {
-					[this.pageItemClass]: true,
-					[this.pageItemActiveClass]: isActive,
-					[this.pageItemInactiveClass]: !isActive
-				}
+				'class': (_class2 = {}, _defineProperty(_class2, _this.pageItemClass, true), _defineProperty(_class2, _this.pageItemActiveClass, false), _defineProperty(_class2, _this.pageItemInactiveClass, true), _class2),
+				key: key
 			}, childVNodes);
 		};
 
-		const createLabelAndPageItems = (vnodes) => {
-			const labelItems = [];
-			const pageItems = [];
+		var createLabelAndPageItems = function createLabelAndPageItems(vnodes) {
+			var labelItems = [];
+			var pageItems = [];
+			var key = undefined;
 
-			let currentLabel = [];
-			let currentPage = [];
+			var currentLabel = [];
+			var currentPage = [];
 
-			vnodes.forEach(vnode => {
+			vnodes.forEach(function (vnode, index) {
 				if (isLabel(vnode)) {
 					if (currentLabel.length) {
-						labelItems.push(_createLabelItem(currentLabel, labelItems.length));
-						pageItems.push(_createPageItem(currentPage, pageItems.length));
+						labelItems.push(_createLabelItem(currentLabel, key, labelItems.length));
+						pageItems.push(_createPageItem(currentPage, key));
 					}
 					currentLabel = [];
 					currentLabel.push.apply(currentLabel, vnode.componentOptions.children);
 					currentPage = [];
-				}
-				else /*if(isPage(item))*/ {
-					if (!currentLabel.length) {
-						currentLabel.push('');
+					key = vnode.data.key ? 'key-' + vnode.data.key : 'index-' + index;
+				} else /*if(isPage(item))*/{
+						if (!currentLabel.length) {
+							currentLabel.push('');
+						}
+						currentPage.push.apply(currentPage, vnode.componentOptions.children);
 					}
-					currentPage.push.apply(currentPage, vnode.componentOptions.children);
-				}
 			});
 
 			if (currentLabel.length) {
-				labelItems.push(_createLabelItem(currentLabel, labelItems.length));
-				pageItems.push(_createPageItem(currentPage, pageItems.length));
+				labelItems.push(_createLabelItem(currentLabel, key, labelItems.length));
+				pageItems.push(_createPageItem(currentPage, key));
 			}
 
 			return {
-				labelItems,
-				pageItems
+				labelItems: labelItems,
+				pageItems: pageItems
 			};
 		};
 
-		const createTabContainer = (items) => {
+		var createTabContainer = function createTabContainer(items) {
 			return createElement('div', {
-				'class': {
-					[this.tabContainerClass]: true
-				}
+				'class': _defineProperty({}, _this.tabContainerClass, true),
+				key: 'tab-container'
 			}, items);
 		};
 
-		const _createLabelContainer = (labelItems, positionClass) => {
+		var _createLabelContainer = function _createLabelContainer(labelItems, positionClass, position) {
+			var _class4;
+
 			window.labelContainer = createElement('div', {
-				'class': {
-					[this.labelContainerClass]: true,
-					[positionClass]: true
-				}
+				'class': (_class4 = {}, _defineProperty(_class4, _this.labelContainerClass, true), _defineProperty(_class4, positionClass, true), _class4),
+				key: 'label-container-' + position
 			}, labelItems);
 			return window.labelContainer;
 		};
 
-		const createTopLabelContainer = (labelItems) => {
-			return _createLabelContainer(labelItems, this.topLabelContainerClass);
+		var createHeaderLabelContainer = function createHeaderLabelContainer(labelItems) {
+			return _createLabelContainer(labelItems, _this.headerLabelContainerClass, POSITION_TOP);
 		};
 
-		const createBottomLabelContainer = (labelItems) => {
-			return _createLabelContainer(labelItems, this.bottomLabelContainerClass);
+		var createFooterLabelContainer = function createFooterLabelContainer(labelItems) {
+			return _createLabelContainer(labelItems, _this.footerLabelContainerClass, POSITION_BOTTOM);
 		};
 
-		const createPageContainer = (pageItems) => {
+		var createPageContainer = function createPageContainer(pageItems) {
 			return createElement('div', {
-				'class': {
-					[this.pageContainerClass]: true
-				}
+				'class': _defineProperty({}, _this.pageContainerClass, true),
+				key: 'page-container'
 			}, pageItems);
 		};
 
-		const cloneVNode = (vnode) => {
+		var cloneVNode = function cloneVNode(vnode) {
 			if (vnode.tag) {
 				return createElement(vnode.tag, vnode.data, cloneVNodes(vnode.children));
-			}
-			else if (vnode.text) {
+			} else if (vnode.text) {
 				return vnode.text;
-			}
-			else {
+			} else {
 				return vnode;
 			}
 		};
 
-		const cloneVNodes = (vnodes) => {
-			return vnodes.map(vnode => {
+		var cloneVNodes = function cloneVNodes(vnodes) {
+			return vnodes.map(function (vnode) {
 				return cloneVNode(vnode);
 			});
 		};
 
 		//====================================================================================
 		//start
-		const slotChildren = this.$slots.default;
-		if (!slotChildren.length) {
+		var slotChildren = this.$slots.default;
+		if (!slotChildren || !slotChildren.length) {
 			return;
 		}
 
-		const allItems = getLabelAndPageVnodes(slotChildren);
+		var allItems = getLabelAndPageVnodes(slotChildren);
 		if (!allItems.length) {
 			return;
 		}
 
 		//collect labels/pages
-		const {labelItems, pageItems} = createLabelAndPageItems(allItems);
-		this.count = labelItems.length;
 
-		let topLabelItems;
-		let bottomLabelItems;
-		if (this.showTopLabelContainer && this.showBottomLabelContainer) {
-			topLabelItems = labelItems;
-			bottomLabelItems = cloneVNodes(labelItems);
+		var _createLabelAndPageIt = createLabelAndPageItems(allItems),
+		    labelItems = _createLabelAndPageIt.labelItems,
+		    pageItems = _createLabelAndPageIt.pageItems;
+
+		this.count = labelItems.length;
+		var oldIndex = this.currentIndex;
+		var newIndex = this.targetIndex >= this.count ? this.count - 1 : this.targetIndex;
+		this.currentIndex = newIndex;
+		if (oldIndex !== newIndex) {
+			this.$emit('switch', oldIndex, newIndex);
+			this.$emit('update:activeIndex', newIndex);
 		}
-		else {
-			topLabelItems = bottomLabelItems = labelItems;
+
+		labelItems[newIndex].data['class'][this.labelItemActiveClass] = true;
+		labelItems[newIndex].data['class'][this.labelItemInactiveClass] = false;
+
+		pageItems[newIndex].data['class'][this.pageItemActiveClass] = true;
+		pageItems[newIndex].data['class'][this.pageItemInactiveClass] = false;
+
+		var headerLabelItems = void 0;
+		var footerLabelItems = void 0;
+		if (this.showHeaderLabelContainer && this.showFooterLabelContainer) {
+			headerLabelItems = labelItems;
+			footerLabelItems = cloneVNodes(labelItems);
+		} else {
+			headerLabelItems = footerLabelItems = labelItems;
 		}
 
 		// top label container
-		const topLabelContainer = this.showTopLabelContainer && createTopLabelContainer(topLabelItems);
+		var headerLabelContainer = this.showHeaderLabelContainer && createHeaderLabelContainer(headerLabelItems);
 
 		//page container
-		const pageContainer = createPageContainer(pageItems);
+		var pageContainer = createPageContainer(pageItems);
 
 		// bottom label container
-		const bottomLabelContainer = this.showBottomLabelContainer && createBottomLabelContainer(bottomLabelItems);
+		var footerLabelContainer = this.showFooterLabelContainer && createFooterLabelContainer(footerLabelItems);
 
 		//tabb container
-		const tabContaienr = createTabContainer([topLabelContainer, pageContainer, bottomLabelContainer]);
+		var tabContaienr = createTabContainer([headerLabelContainer, pageContainer, footerLabelContainer]);
 
 		//return
 		return tabContaienr;
 	}
 };
 
-module.exports = definition;
+/* harmony default export */ __webpack_exports__["a"] = (definition);
 
 /***/ }),
-/* 7 */
-/***/ (function(module, exports, __webpack_require__) {
+/* 3 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-let Vue = __webpack_require__(0);
-if (Vue.default) {
-	Vue = Vue.default;
-}
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__definition__ = __webpack_require__(4);
 
-const definition = __webpack_require__(8);
-const VueTabberLabel = Vue.component('VueTabberLabel', definition);
 
-module.exports = VueTabberLabel;
 
+
+var VueTabberLabel = __WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('VueTabberLabel', __WEBPACK_IMPORTED_MODULE_1__definition__["a" /* default */]);
+
+/* harmony default export */ __webpack_exports__["a"] = (VueTabberLabel);
 
 /***/ }),
-/* 8 */
-/***/ (function(module, exports) {
+/* 4 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-const definition = {
+"use strict";
+/* harmony default export */ __webpack_exports__["a"] = ({
 	name: 'VueTabberLabel'
-};
-
-module.exports = definition;
+});
 
 /***/ }),
-/* 9 */
-/***/ (function(module, exports, __webpack_require__) {
+/* 5 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-let Vue = __webpack_require__(0);
-if (Vue.default) {
-	Vue = Vue.default;
-}
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__definition__ = __webpack_require__(6);
 
-const definition = __webpack_require__(10);
-const VueTabberPage = Vue.component('VueTabberPage', definition);
 
-module.exports = VueTabberPage;
 
+
+var VueTabberPage = __WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('VueTabberPage', __WEBPACK_IMPORTED_MODULE_1__definition__["a" /* default */]);
+
+/* harmony default export */ __webpack_exports__["a"] = (VueTabberPage);
 
 /***/ }),
-/* 10 */
-/***/ (function(module, exports) {
+/* 6 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-const definition = {
+"use strict";
+/* harmony default export */ __webpack_exports__["a"] = ({
 	name: 'VueTabberPage'
-};
+});
 
-module.exports = definition;
+/***/ })
+/******/ ]);
+});
+//# sourceMappingURL=vue-tabber.js.map
 
 /***/ })
 /******/ ]);
