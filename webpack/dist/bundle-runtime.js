@@ -8064,20 +8064,11 @@ var RE_TAG_LABEL = /[Vv]ue-?[Tt]abber-?[Ll]abel/;
 var RE_TAG_PAGE = /[Vv]ue-?[Tt]abber-?[Pp]age/;
 
 function isLabel(vnode) {
-	return RE_TAG_LABEL.test(vnode.componentOptions.tag);
+	return vnode.componentOptions && RE_TAG_LABEL.test(vnode.componentOptions.tag);
 }
 
 function isPage(vnode) {
-	return RE_TAG_PAGE.test(vnode.componentOptions.tag);
-}
-
-function getLabelAndPageVnodes(vnodes) {
-	return vnodes.filter(function (vnode) {
-		if (!vnode.componentOptions) {
-			return false;
-		}
-		return isLabel(vnode) || isPage(vnode);
-	});
+	return vnode.componentOptions && RE_TAG_PAGE.test(vnode.componentOptions.tag);
 }
 
 function getValidIndex(index) {
@@ -8238,12 +8229,16 @@ var definition = {
 					currentLabel.push.apply(currentLabel, vnode.componentOptions.children);
 					currentPage = [];
 					key = vnode.data.key ? 'key-' + vnode.data.key : 'index-' + index;
-				} else /*if(isPage(item))*/{
-						if (!currentLabel.length) {
-							currentLabel.push('');
-						}
-						currentPage.push.apply(currentPage, vnode.componentOptions.children);
+				} else {
+					if (!currentLabel.length) {
+						currentLabel.push('');
 					}
+					if (isPage(vnode)) {
+						currentPage.push.apply(currentPage, vnode.componentOptions.children);
+					} else if (vnode.tag) {
+						currentPage.push(vnode);
+					}
+				}
 			});
 
 			if (currentLabel.length) {
@@ -8312,14 +8307,9 @@ var definition = {
 			return;
 		}
 
-		var allItems = getLabelAndPageVnodes(slotChildren);
-		if (!allItems.length) {
-			return;
-		}
-
 		//collect labels/pages
 
-		var _createLabelAndPageIt = createLabelAndPageItems(allItems),
+		var _createLabelAndPageIt = createLabelAndPageItems(slotChildren),
 		    labelItems = _createLabelAndPageIt.labelItems,
 		    pageItems = _createLabelAndPageIt.pageItems;
 
@@ -8367,7 +8357,7 @@ var definition = {
 /* harmony default export */ __webpack_exports__["a"] = (definition);
 
 /***/ })
-/******/ ]);
+/******/ ])["default"];
 });
 
 /***/ })

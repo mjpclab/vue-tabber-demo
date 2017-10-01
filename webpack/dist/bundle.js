@@ -86,11 +86,13 @@ var _vue2 = _interopRequireDefault(_vue);
 
 var _components = __webpack_require__(4);
 
-var _components2 = _interopRequireDefault(_components);
+var tabberComponents = _interopRequireWildcard(_components);
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-_components2.default.registerTo(_vue2.default);
+tabberComponents.registerTo(_vue2.default);
 
 new _vue2.default({
 	el: '#app'
@@ -10627,20 +10629,11 @@ var RE_TAG_LABEL = /[Vv]ue-?[Tt]abber-?[Ll]abel/;
 var RE_TAG_PAGE = /[Vv]ue-?[Tt]abber-?[Pp]age/;
 
 function isLabel(vnode) {
-	return RE_TAG_LABEL.test(vnode.componentOptions.tag);
+	return vnode.componentOptions && RE_TAG_LABEL.test(vnode.componentOptions.tag);
 }
 
 function isPage(vnode) {
-	return RE_TAG_PAGE.test(vnode.componentOptions.tag);
-}
-
-function getLabelAndPageVnodes(vnodes) {
-	return vnodes.filter(function (vnode) {
-		if (!vnode.componentOptions) {
-			return false;
-		}
-		return isLabel(vnode) || isPage(vnode);
-	});
+	return vnode.componentOptions && RE_TAG_PAGE.test(vnode.componentOptions.tag);
 }
 
 function getValidIndex(index) {
@@ -10801,12 +10794,16 @@ var definition = {
 					currentLabel.push.apply(currentLabel, vnode.componentOptions.children);
 					currentPage = [];
 					key = vnode.data.key ? 'key-' + vnode.data.key : 'index-' + index;
-				} else /*if(isPage(item))*/{
-						if (!currentLabel.length) {
-							currentLabel.push('');
-						}
-						currentPage.push.apply(currentPage, vnode.componentOptions.children);
+				} else {
+					if (!currentLabel.length) {
+						currentLabel.push('');
 					}
+					if (isPage(vnode)) {
+						currentPage.push.apply(currentPage, vnode.componentOptions.children);
+					} else if (vnode.tag) {
+						currentPage.push(vnode);
+					}
+				}
 			});
 
 			if (currentLabel.length) {
@@ -10875,14 +10872,9 @@ var definition = {
 			return;
 		}
 
-		var allItems = getLabelAndPageVnodes(slotChildren);
-		if (!allItems.length) {
-			return;
-		}
-
 		//collect labels/pages
 
-		var _createLabelAndPageIt = createLabelAndPageItems(allItems),
+		var _createLabelAndPageIt = createLabelAndPageItems(slotChildren),
 		    labelItems = _createLabelAndPageIt.labelItems,
 		    pageItems = _createLabelAndPageIt.pageItems;
 
@@ -10935,26 +10927,28 @@ var definition = {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return definitions; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "definitions", function() { return definitions; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__label_definition__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__page_definition__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__tabber_definition__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__tabber_component__ = __webpack_require__(4);
+/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "VueTabberLabel", function() { return __WEBPACK_IMPORTED_MODULE_0__label_definition__["a"]; });
+/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "VueTabberPage", function() { return __WEBPACK_IMPORTED_MODULE_1__page_definition__["a"]; });
+/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "VueTabber", function() { return __WEBPACK_IMPORTED_MODULE_2__tabber_definition__["a"]; });
+/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "registerTo", function() { return __WEBPACK_IMPORTED_MODULE_3__tabber_component__["a"]; });
 
 
 
 
 
-/* harmony default export */ __webpack_exports__["default"] = ({
-	definitions: {
-		VueTabberLabel: __WEBPACK_IMPORTED_MODULE_0__label_definition__["a" /* default */],
-		VueTabberPage: __WEBPACK_IMPORTED_MODULE_1__page_definition__["a" /* default */],
-		VueTabber: __WEBPACK_IMPORTED_MODULE_2__tabber_definition__["a" /* default */]
-	},
+var definitions = {
 	VueTabberLabel: __WEBPACK_IMPORTED_MODULE_0__label_definition__["a" /* default */],
 	VueTabberPage: __WEBPACK_IMPORTED_MODULE_1__page_definition__["a" /* default */],
-	VueTabber: __WEBPACK_IMPORTED_MODULE_2__tabber_definition__["a" /* default */],
-	registerTo: __WEBPACK_IMPORTED_MODULE_3__tabber_component__["a" /* registerTo */]
-});
+	VueTabber: __WEBPACK_IMPORTED_MODULE_2__tabber_definition__["a" /* default */]
+};
+
+
 
 /***/ }),
 /* 4 */

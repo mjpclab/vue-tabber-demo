@@ -8,7 +8,7 @@
   "license": "ISC",
   "dependencies": {
     "vue": "^2.4.4",
-    "vue-tabber": "0.0.25"
+    "vue-tabber": "0.0.27"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
