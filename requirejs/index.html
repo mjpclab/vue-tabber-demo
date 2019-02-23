@@ -4,23 +4,41 @@
 	<meta charset="UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
 	<title>Demo</title>
-	<link rel="stylesheet" type="text/css" href="lib/vue-tabber/layout.css"/>
-	<link rel="stylesheet" type="text/css" href="lib/vue-tabber/skin-gray.css"/>
+	<link rel="stylesheet" type="text/css" href="lib/vue-tabber/theme/gray.css"/>
 	<link rel="stylesheet" type="text/css" href="css/main.css"/>
 </head>
 <body>
 
 <div id="app">
-	<vue-tabber>
-		<vue-tabber-label>title 1</vue-tabber-label>
-		<vue-tabber-page>content of page 1</vue-tabber-page>
+	<tab>
+		<tab-label>title 1</tab-label>
+		<tab-panel>content of page 1</tab-panel>
 
-		<vue-tabber-label>title 2</vue-tabber-label>
-		<vue-tabber-page>content of page 2</vue-tabber-page>
-	</vue-tabber>
+		<tab-label>title 2</tab-label>
+		<tab-panel>content of page 2</tab-panel>
+	</tab>
 </div>
 
 <script type="text/javascript" src="lib/requirejs/require.js"></script>
-<script type="text/javascript" src="js/index.js"></script>
+<script type="text/javascript">
+	require.config({
+		baseUrl: 'lib',
+		paths: {
+			'vue': 'vue/vue',
+			'vue-tabber': 'vue-tabber/vue-tabber'
+		}
+	});
+
+	require(['vue', 'vue-tabber'], function (Vue, VueTabber) {
+		new Vue({
+			el: '#app',
+			components: {
+				Tab: VueTabber,
+				TabLabel: VueTabber.Label,
+				TabPanel: VueTabber.Panel
+			}
+		});
+	});
+</script>
 </body>
 </html>

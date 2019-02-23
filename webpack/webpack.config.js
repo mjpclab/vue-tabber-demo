@@ -1,45 +1,43 @@
-const webpack = require('webpack');
 const path = require('path');
+const VueLoaderPlugin = require('vue-loader/lib/plugin')
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
-module.exports = [{
-	entry: './src/js/index.js',
-	output: {
-		libraryTarget: 'umd',
-		path: path.resolve(__dirname, 'dist'),
-		filename: 'bundle.js'
+module.exports = {
+	mode: 'none',
+	resolve: {
+		extensions: ['.js', '.vue']
 	},
+	entry: './src/index.js',
 	module: {
 		rules: [
-			{test: /\.js$/, exclude: /node_modules/, loader: "babel-loader"}
+			{
+				test: /\.js$/,
+				exclude: /node_modules/,
+				loader: 'babel-loader'
+			},
+			{
+				test: /\.css$/,
+				use: [
+					MiniCssExtractPlugin.loader,
+					'css-loader'
+				]
+			},
+			{
+				test: /\.vue$/,
+				loader: 'vue-loader'
+			}
 		]
 	},
-	plugins: [
-		/*new webpack.DefinePlugin({
-			'process.env': {
-				'NODE_ENV': JSON.stringify('production')
-			}
-		})*/
-	],
-	devtool: 'source-map'
-}, {
-	entry: './src/js/runtime.js',
 	output: {
-		libraryTarget: 'umd',
 		path: path.resolve(__dirname, 'dist'),
-		filename: 'bundle-runtime.js'
-	},
-	module: {
-		rules: [
-			{test: /\.js$/, exclude: /node_modules/, loader: "babel-loader"},
-			{test: /\.css$/, use: ['style-loader', 'css-loader']}
-		]
+		filename: '[name].js'
 	},
 	plugins: [
-		/*new webpack.DefinePlugin({
-			'process.env': {
-				'NODE_ENV': JSON.stringify('production')
-			}
-		})*/
-	],
-	devtool: 'source-map'
-}];
+		new VueLoaderPlugin(),
+		new MiniCssExtractPlugin(),
+		new HtmlWebpackPlugin({
+			template: path.join(__dirname, 'public/index.html'),
+		})
+	]
+};
